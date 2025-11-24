@@ -30,6 +30,3 @@ body {
   margin: 0 auto;
   background-color: rgb(124, 124, 124);
 }
-html {
-  scroll-behavior: smooth;
-}

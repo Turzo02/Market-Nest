@@ -1,11 +1,16 @@
-import Image from "next/image";
-
+import CallToActionBanner  from "@/Home/CallToActionBanner";
+import HeroSection from "@/Home/HeroSection";
+import MarketplaceAdvantages from "@/Home/MarketplaceAdvantages";
+import MarketplaceBenefitsSection from "@/Home/MarketplaceBenefitsSection";
+import ReviewsSection from "@/Home/ReviewsSection";
 export default function Home() {
   return (
-    <div className="section flex min-h-screen items-center justify-center  font-sans"  id="top" >
-      <h1 className="text-4xl font-bold  ">
-        Hello world!
-      </h1>
+    <div className="section min-h-screen font-sans">
+      <HeroSection></HeroSection>
+      <MarketplaceAdvantages></MarketplaceAdvantages>
+      <MarketplaceBenefitsSection></MarketplaceBenefitsSection>
+      <ReviewsSection></ReviewsSection>
+      <CallToActionBanner></CallToActionBanner>
     </div>
   );
 }

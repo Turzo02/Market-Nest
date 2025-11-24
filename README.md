@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🌈 Color Theme (Dark & Light Friendly)
+1. Primary Color
 
-## Getting Started
+#4F46E5 – Deep Indigo
 
-First, run the development server:
+Works for buttons, links, highlights
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Stands out in both light and dark backgrounds
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Secondary / Accent Color
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+#22D3EE – Cyan / Teal
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+For secondary buttons, badges, hover effects
 
-## Learn More
+3. Background Colors
 
-To learn more about Next.js, take a look at the following resources:
+Light Mode: #F9FAFB – Soft White / Light Gray
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Dark Mode: #1F2937 – Charcoal / Dark Gray
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Surface / Card Background
 
-## Deploy on Vercel
+Light Mode: #FFFFFF – Pure White
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Dark Mode: #111827 – Near Black
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Text Colors
+
+Primary Text:
+
+Light Mode: #111827 – Almost Black
+
+Dark Mode: #F9FAFB – Almost White
+
+Secondary Text:
+
+Light Mode: #6B7280 – Gray
+
+Dark Mode: #9CA3AF – Light Gray
+
+6. Success / Positive
+
+#22C55E – Vibrant Green
+
+7. Warning / Caution
+
+#F59E0B – Amber / Orange
+
+8. Error / Negative
+
+#EF4444 – Red
+
+9. Border / Divider
+
+Light Mode: #E5E7EB – Light Gray
+
+Dark Mode: #374151 – Dark Gray
