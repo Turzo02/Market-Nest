@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ShoppingCart, ArrowRight } from "lucide-react";
-import Button from "@/Components/Buttons";
+import Button from "@/Components/Button";
 
 const HeroSection = () => {
   return (

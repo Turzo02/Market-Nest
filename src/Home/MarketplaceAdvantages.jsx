@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Tags, Shield, Users, Compass } from "lucide-react";
-import Button from "@/Components/Buttons";
+import Button from "@/Components/Button";
 
 const MarketplaceAdvantages = () => {
   const advantages = [

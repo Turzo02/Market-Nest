@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Truck, ShieldCheck, Headset, Zap, Star, ShoppingBag } from "lucide-react";
-import Button from "@/Components/Buttons";
+import Button from "@/Components/Button";
 
 // --- Benefits Card Component ---
 const BenefitCard = ({ icon: Icon, title, description }) => (
