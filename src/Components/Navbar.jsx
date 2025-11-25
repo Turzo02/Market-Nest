@@ -12,16 +12,18 @@ import {
   Settings,
   Store,
 } from "lucide-react";
-import Button from "./Button";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navLinks = [
-    { name: "Home", href: "/", icon: Home },
-    { name: "Products", href: "/Products", icon: Package },
-    { name: "Add New", href: "/AddNewProduct", icon: PlusSquare },
-    { name: "Manage", href: "/ManageProduct", icon: Settings },
+    { name: "Home", href: "/" },
+    { name: "Products", href: "/Products" },
+    { name: "Add New", href: "/AddNewProduct" },
+    { name: "Manage", href: "/ManageProduct" },
   ];
 
   const linksContent = (
@@ -32,10 +34,14 @@ const Navbar = () => {
           <li key={link.name}>
             <a
               href={link.href}
-              className="flex items-center space-x-2 p-2 rounded-lg text-gray-300 hover:bg-indigo-700/50 hover:text-white transition duration-200 lg:px-4 lg:py-2"
+              className={`flex items-center space-x-2 p-2 rounded-lg text-gray-400 hover:text-white transition duration-200 lg:px-4 lg:py-2 ${
+                pathname === link.href
+                  ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/50"
+                  : "text-gray-400 hover:bg-indigo-500/30 hover:text-white"
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Icon className="w-5 h-5" />
+          
               <span>{link.name}</span>
             </a>
           </li>
@@ -49,12 +55,12 @@ const Navbar = () => {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-0">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Title */}
-          <a href="#" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2">
             <Store className="w-7 h-7 text-fuchsia-400" />
             <span className="text-2xl font-bold tracking-wider bg-clip-text text-transparent bg-linear-to-r from-indigo-400 to-fuchsia-500">
               Market Nest
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1">
@@ -95,7 +101,6 @@ const Navbar = () => {
                 <button
                   className="w-full flex items-center justify-center bg-fuchsia-600 text-white font-semibold py-2 px-5 rounded-full transition duration-300 hover:bg-fuchsia-700 shadow-md"
                   onClick={() => {
-                    console.log("Login clicked");
                     setIsMenuOpen(false);
                   }}
                 >
