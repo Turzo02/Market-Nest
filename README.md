@@ -1,58 +1,57 @@
-🌈 Color Theme (Dark & Light Friendly)
-1. Primary Color
+# Next.js Task App
 
-#4F46E5 – Deep Indigo
+## About
+This is a small **Next.js app** with **public and protected pages** using **NextAuth.js** for login.  
+You can use it as an **eCommerce, course, event, or custom project**.  
+UI is clean, responsive, and consistent. Functionality is simple but includes **login and protected pages**.  
 
-Works for buttons, links, highlights
+---
+Install packages:
 
-Stands out in both light and dark backgrounds
+## Setup & Install
+1. Clone repo:
+```bash
+git clone https://github.com/your-username/nextjs-task-app.git
+cd nextjs-task-app
 
-2. Secondary / Accent Color
+Run app:
 
-#22D3EE – Cyan / Teal
+npm run dev
+# or
+yarn dev
 
-For secondary buttons, badges, hover effects
+Routes
 
-3. Background Colors
+Public Pages:
 
-Light Mode: #F9FAFB – Soft White / Light Gray
+/ – Landing page (Navbar, Hero, sections, Footer)
 
-Dark Mode: #1F2937 – Charcoal / Dark Gray
 
-4. Surface / Card Background
+/items – Item list page (search + cards)
 
-Light Mode: #FFFFFF – Pure White
+/items/[id] – Item details page
 
-Dark Mode: #111827 – Near Black
 
-5. Text Colors
+/add-product – Add product form
 
-Primary Text:
 
-Light Mode: #111827 – Almost Black
+UI & Features
 
-Dark Mode: #F9FAFB – Almost White
+Clean, responsive layout for mobile/tablet/desktop
 
-Secondary Text:
+Uniform cards with hover/focus effects
 
-Light Mode: #6B7280 – Gray
+Forms with inline validation
 
-Dark Mode: #9CA3AF – Light Gray
 
-6. Success / Positive
+Simple interactions and consistent design
 
-#22C55E – Vibrant Green
+Tech
 
-7. Warning / Caution
+Next.js (App Router)
 
-#F59E0B – Amber / Orange
+Express.js (Backend)
 
-8. Error / Negative
+Tailwind CSS (Styling)
 
-#EF4444 – Red
-
-9. Border / Divider
-
-Light Mode: #E5E7EB – Light Gray
-
-Dark Mode: #374151 – Dark Gray
+Author: Syed Naimul Islam Turzo
