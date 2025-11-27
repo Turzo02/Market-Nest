@@ -13,45 +13,28 @@ Install packages:
 ```bash
 git clone https://github.com/your-username/nextjs-task-app.git
 cd nextjs-task-app
-
+```
 Run app:
-
+```
 npm run dev
 # or
 yarn dev
-
+```
 Routes
-
 Public Pages:
-
 / – Landing page (Navbar, Hero, sections, Footer)
-
-
 /items – Item list page (search + cards)
-
 /items/[id] – Item details page
-
-
 /add-product – Add product form
 
-
 UI & Features
-
 Clean, responsive layout for mobile/tablet/desktop
-
 Uniform cards with hover/focus effects
-
 Forms with inline validation
-
-
 Simple interactions and consistent design
 
 Tech
-
 Next.js (App Router)
-
 Express.js (Backend)
-
 Tailwind CSS (Styling)
-
 Author: Syed Naimul Islam Turzo
