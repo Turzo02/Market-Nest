@@ -10,8 +10,9 @@ import {
   Zap,
   Send,
 } from "lucide-react";
+import Swal from "sweetalert2";
 
-// Define the initial state structure for the form
+// --- Constants ---
 const initialFormData = {
   title: "",
   category: "",
@@ -24,58 +25,63 @@ const initialFormData = {
   in_stock: true,
   stock_quantity: 0,
   sku: "",
-  image_1: "", // URL for the main image
-  userEmail: "", // The extra requested field
+  image_1: "",
+  userEmail: "",
+};
+
+const API_ENDPOINT = "https://markert-nest-back-end.vercel.app/Products";
+
+
+// --- Helper Component (Moved Outside to fix Focus Loss) ---
+const FormInput = ({
+  label,
+  name,
+  value,
+  onChange,
+  type = "text",
+  icon: Icon,
+  ...props
+}) => {
+  return (
+    <div className="flex flex-col space-y-2">
+      <label htmlFor={name} className="text-sm font-medium text-gray-300">
+        {label}
+      </label>
+      <div className="relative">
+        {Icon && (
+          <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-indigo-400" />
+        )}
+        <input
+          id={name}
+          name={name}
+          type={type}
+          value={value} // Controlled input
+          onChange={onChange}
+          required
+          className={`w-full py-3 ${
+            Icon ? "pl-10" : "pl-4"
+          } pr-4 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-fuchsia-500 focus:border-fuchsia-500 transition duration-200`}
+          {...props}
+        />
+      </div>
+    </div>
+  );
 };
 
 // --- Main Component ---
 const AddProductPage = () => {
-  const [formData, setFormData] = useState("");
+  // FIX 1: Initialize with the object, not a string
+  const [formData, setFormData] = useState(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
-  const API_ENDPOINT = "http://localhost:3000/products";
-
-  // FIX: Optimized handleChange to ensure state updates correctly for all input types
   const handleChange = (e) => {
-    const { name, value, type } = e.target;
+    const { name, value } = e.target;
 
-    // Store everything as string (even numbers) to avoid cursor jump issues
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
-
-  // Helper component for styled input fields
-  const FormInput = ({ label, name, type = "text", icon: Icon, ...props }) => {
-    // Use state directly, fallback to empty string if undefined/null
-    const value = formData[name] ?? "";
-
-    return (
-      <div className="flex flex-col space-y-2">
-        <label htmlFor={name} className="text-sm font-medium text-gray-300">
-          {label}
-        </label>
-        <div className="relative">
-          {Icon && (
-            <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-indigo-400" />
-          )}
-          <input
-            id={name}
-            name={name}
-            type={type}
-            value={value}
-            onChange={handleChange}
-            required
-            className={`w-full py-3 ${
-              Icon ? "pl-10" : "pl-4"
-            } pr-4 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-fuchsia-500 focus:border-fuchsia-500 transition duration-200`}
-            {...props}
-          />
-        </div>
-      </div>
-    );
   };
 
   const handleSubmit = async (e) => {
@@ -83,57 +89,49 @@ const AddProductPage = () => {
     setIsSubmitting(true);
     setMessage("");
 
-    // Prepare the payload (removing the userEmail before sending to a typical product API)
     const { userEmail, ...productPayload } = formData;
 
-    // Convert prices and stock to numbers. Use || 0 to default to zero if the input is empty ('').
-    productPayload.regular_price =
-      parseFloat(productPayload.regular_price) || 0;
-    productPayload.sale_price = parseFloat(productPayload.sale_price) || 0;
-    productPayload.stock_quantity =
-      parseInt(productPayload.stock_quantity, 10) || 0;
-
-    // Add calculated/default fields usually set by the system during creation
+    // Convert types for API
     const finalPayload = {
       ...productPayload,
+      regular_price: parseFloat(productPayload.regular_price) || 0,
+      sale_price: parseFloat(productPayload.sale_price) || 0,
+      stock_quantity: parseInt(productPayload.stock_quantity, 10) || 0,
       in_stock: true,
       average_rating: 0,
       total_reviews: 0,
       created_at: new Date().toISOString(),
-      submitted_by_email: userEmail, // Keeping the email in the payload as per user intent
+      submitted_by_email: userEmail,
     };
 
-    // --- Actual API Call Implementation ---
     try {
       const response = await fetch(API_ENDPOINT, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(finalPayload),
       });
 
       if (!response.ok) {
-        // Attempt to read a detailed error message from the server
         const errorData = await response
           .json()
           .catch(() => ({ message: response.statusText }));
         throw new Error(
-          errorData.message ||
-            `Server responded with status: ${response.status}`
+          errorData.message || `Server status: ${response.status}`
         );
       }
 
       const result = await response.json();
-      console.log("Product successfully added:", result);
+      // console.log("Success:", result);
 
       setMessage("Product added successfully!");
-      setFormData(initialFormData); // Reset form
+      setFormData(initialFormData); // Reset form to initial object
+      Swal.fire({
+        title: "Product Added Successfully!",
+        icon: "success",
+      });
     } catch (error) {
       console.error("API Error:", error);
-      setMessage(
-        `Error adding product: ${error.message || "Network request failed."}`
-      );
+      setMessage(`Error: ${error.message || "Request failed"}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -171,7 +169,7 @@ const AddProductPage = () => {
           onSubmit={handleSubmit}
           className="bg-gray-800 p-8 rounded-xl shadow-2xl space-y-8"
         >
-          {/* User Info (Extra Field) */}
+          {/* User Info */}
           <div className="border-b border-gray-700 pb-6 mb-6">
             <h2 className="text-xl font-semibold text-indigo-400 mb-4">
               Submission Details
@@ -183,6 +181,7 @@ const AddProductPage = () => {
               icon={Mail}
               placeholder="e.g., yourname@example.com"
               value={formData.userEmail}
+              onChange={handleChange}
             />
           </div>
 
@@ -196,6 +195,8 @@ const AddProductPage = () => {
               name="title"
               icon={TextCursorInput}
               placeholder="e.g., Stellar Gaming Mouse"
+              value={formData.title}
+              onChange={handleChange}
             />
 
             <FormInput
@@ -203,6 +204,8 @@ const AddProductPage = () => {
               name="sku"
               icon={Package}
               placeholder="e.g., ST-GM-001"
+              value={formData.sku}
+              onChange={handleChange}
             />
 
             <FormInput
@@ -210,9 +213,11 @@ const AddProductPage = () => {
               name="brand"
               icon={Zap}
               placeholder="e.g., HyperNova Tech"
+              value={formData.brand}
+              onChange={handleChange}
             />
 
-            {/* Category Dropdown (Simple implementation) */}
+            {/* Category Dropdown */}
             <div className="flex flex-col space-y-2">
               <label
                 htmlFor="category"
@@ -231,14 +236,14 @@ const AddProductPage = () => {
                 <option value="" disabled>
                   Select a category
                 </option>
-                <option value="Peripherals">Electronics</option>
+                <option value="Electronics">Electronics</option>
                 <option value="Wearables">Wearables</option>
-                <option value="Audio">Home Appliances</option>
-                <option value="Furniture">Office</option>
-                <option value="Others">Accessories</option>
-                <option value="Others">Gaming</option>
-                <option value="Others">Lifestyle</option>
-                <option value="Others">Home & Office</option>
+                <option value="Home Appliances">Home Appliances</option>
+                <option value="Office">Office</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Home & Office">Home & Office</option>
               </select>
             </div>
           </div>
@@ -294,6 +299,8 @@ const AddProductPage = () => {
               type="number"
               step="0.01"
               icon={DollarSign}
+              value={formData.regular_price}
+              onChange={handleChange}
             />
 
             <FormInput
@@ -302,6 +309,8 @@ const AddProductPage = () => {
               type="number"
               step="0.01"
               icon={DollarSign}
+              value={formData.sale_price}
+              onChange={handleChange}
             />
 
             <FormInput
@@ -310,16 +319,20 @@ const AddProductPage = () => {
               type="number"
               min="0"
               icon={Package}
+              value={formData.stock_quantity}
+              onChange={handleChange}
             />
           </div>
 
-          {/* Image URL and Status */}
-          <div className="">
+          {/* Image URL */}
+          <div>
             <FormInput
               label="Main Image URL"
               name="image_1"
               placeholder="https://image-url.com/product.png"
               icon={Zap}
+              value={formData.image_1}
+              onChange={handleChange}
             />
           </div>
 
@@ -327,13 +340,12 @@ const AddProductPage = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full flex items-center justify-center space-x-3 
-                                    py-3 px-6 rounded-xl text-lg font-bold transition duration-300 
-                                    ${
-                                      isSubmitting
-                                        ? "bg-fuchsia-800/50 cursor-not-allowed"
-                                        : "bg-fuchsia-600 hover:bg-fuchsia-700 text-white shadow-xl shadow-fuchsia-600/50"
-                                    }`}
+            className={`w-full flex items-center cursor-pointer justify-center space-x-3 py-3 px-6 rounded-xl text-lg font-bold transition duration-300 
+              ${
+                isSubmitting
+                  ? "bg-fuchsia-800/50 cursor-not-allowed"
+                  : "bg-fuchsia-600 hover:bg-fuchsia-700 text-white shadow-xl shadow-fuchsia-600/50"
+              }`}
           >
             {isSubmitting ? (
               <svg

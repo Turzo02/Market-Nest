@@ -28,7 +28,7 @@ const AllProductsListingPage = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:3000/Products", {
+        const res = await fetch("https://markert-nest-back-end.vercel.app/Products", {
           cache: "no-store",
         });
         const data = await res.json();

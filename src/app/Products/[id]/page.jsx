@@ -21,7 +21,8 @@ const RatingStars = ({ rating }) => {
 
 export default async function page({ params }) {
   const { id } = await params;
-  const res = await fetch(`http://localhost:3000/Products/${id}`);
+  const res = await fetch(`https://markert-nest-back-end.vercel.app/Products/${id}`);
+  
   const product = await res.json();
 
   return (

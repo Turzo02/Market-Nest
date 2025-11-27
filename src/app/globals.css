@@ -28,7 +28,6 @@ body {
 .section {
   max-width: 1440px;
   margin: 0 auto;
-  background-color: rgb(124, 124, 124);
 }
 .loader {
   border: 4px solid rgba(255, 255, 255, 0.2);

@@ -69,10 +69,10 @@ const Navbar = () => {
 
           {/* Auth Button (Desktop/Tablet) */}
           <div className="hidden lg:flex items-center space-x-4">
-            <button className="flex items-center bg-fuchsia-600 text-white font-semibold py-2 px-5 rounded-xl transition duration-300 hover:bg-fuchsia-700 shadow-lg shadow-fuchsia-600/50">
+            <Link href="/Login" className="flex items-center bg-fuchsia-600 text-white font-semibold py-2 px-5 rounded-xl transition duration-300 hover:bg-fuchsia-700 shadow-lg shadow-fuchsia-600/50 cursor-pointer">
               <User className="w-5 h-5 mr-2" />
               Login
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -98,15 +98,15 @@ const Navbar = () => {
             <ul className="flex flex-col space-y-1">
               {linksContent}
               <li className="pt-2">
-                <button
-                  className="w-full flex items-center justify-center bg-fuchsia-600 text-white font-semibold py-2 px-5 rounded-full transition duration-300 hover:bg-fuchsia-700 shadow-md"
+                <Link href="/Login"
+                  className="w-full flex items-center justify-center bg-fuchsia-600 text-white font-semibold py-2 px-5 rounded-full transition duration-300 hover:bg-fuchsia-700 shadow-md cursor-pointer"
                   onClick={() => {
                     setIsMenuOpen(false);
                   }}
                 >
                   <User className="w-5 h-5 mr-2" />
                   Login
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
